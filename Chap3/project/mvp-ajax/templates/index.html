@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block top %}
+    {% if weather_result %}
+    <p align="center">
+        欢迎来自{{ weather_result.city }}的访客，
+        您当地的实时天气为:{{ weather_result.text }}/{{ weather_result.temperature }}℃
+    </p>
+    {% endif %}
+{% endblock %}

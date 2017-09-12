@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block css %}
+<style media="screen">
+    .top {
+        margin-top: 3%;
+    }
+    .table {
+        width: 50%;
+    }
+    .div-inline {
+        display: inline;
+    }
+    .temperature {
+        font-size: 20px;
+    }
+    .text {
+        font-size: 25px;
+        vertical-align: middle;
+    }
+    th {
+        text-align: center !important;
+        font-size: 15px;
+    }
+    .table tbody tr td {
+        vertical-align: middle;
+        text-align: center;
+    }
+    img {
+        width:40px;
+    }
+    .now-weather {
+        width: 50%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .now-weather img {
+        width:70px;
+    }
+</style>
+{% endblock%}
+
+{% block results_display %}
+<div class="weather" align="center">
+    {% if prompt %}
+    <div class="prompt alert alert-danger" role="alert">
+      <strong>出错啦!</strong>{{ prompt }}
+    </div>
+    {% endif %}
+    {% if now_weather_info %}
+    <div class="now-weather">
+        <div class="text">{{ now_weather_info.city }}</div>
+        <div><img src="https://s1.sencdn.com/web/icons/3d_50/{{ now_weather_info.code }}.png" alt="weather code"/></div>
+        <div class="div-inline text">{{ now_weather_info.temperature }}℃/</div>
+        <div class="div-inline text">{{ now_weather_info.text }}</div>
+
+    </div>
+    <div class="future-weather" align="center">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>白天</th>
+            <th>晚上</th>
+            <th>气温</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for day_detail in future_weather_info.days_weather_details %}
+          <tr>
+            <td>{{ day_detail.date }}</td>
+            <td><img src="https://s1.sencdn.com/web/icons/3d_50/{{ day_detail.code_day }}.png" alt="weather code"/></td>
+            <td><img src="https://s1.sencdn.com/web/icons/3d_50/{{ day_detail.code_night }}.png" alt="weather code"/></td>
+            <td>{{ day_detail.tep_low }}~{{ day_detail.tep_high }}℃</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <h5>以上天气信息更新时间:{{ now_weather_info.updated_time }}</h5>
+      <h5>Powered by: 心知天气</h5>
+    </div>
+</div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,3 @@
+- [教6个月前的自己编程](https://github.com/thxiami/Py101-004/blob/master/Chap0/note/Python_Tutorial.ipynb)
+- [Study Log](https://github.com/thxiami/Py101-004/blob/master/Chap0/note/Log_0w.md) 是本周每天的学习记录
+- [点评同学 Vwan 的任务成果](https://github.com/thxiami/Py101-004/blob/master/Chap0/note/peer%20comment.md)

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block results_display %}
+    {% if prompt %}
+    <div class="div-center">
+        <div class="prompt alert alert-danger" role="alert" align="center">
+          <strong>出错啦!</strong>{{ prompt }}
+        </div>
+    </div>
+
+    {% endif %}
+    {% for his in history %}
+    <div align="center">
+        <p>-------------------------------</p>
+        <h3>{{ his.city }}：{{ his.text }}/{{ his.temperature }}℃</h3>
+        <p>以上天气信息更新时间:{{ his.updated_time }}</p>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block css %}
+<style media="screen">
+.top {
+    margin-top: 10%;
+}
+.alert {
+    width:300px;
+    margin:0 auto;
+    margin-top: 2%;
+    text-align: center;
+}
+img {
+    width:30px;
+}
+</style>
+{% endblock%}
+{% block top %}
+    {% if weather_result %}
+    <div class="alert alert-info" role="alert">
+      <strong>{{ weather_result.city }}：</strong>
+      <img src="https://s1.sencdn.com/web/icons/3d_50/{{ weather_result.code }}.png" alt="weather code"/>/{{ weather_result.temperature }}℃
+    </div>
+    {% endif %}
+{% endblock %}

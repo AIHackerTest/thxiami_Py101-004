@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block css %}
+<style>
+    .top {
+        margin-bottom: 10px;
+    }
+    .help {
+        width: 50%;
+        text-align: left;
+        margin-top: 20px;
+        font-size: 17px;
+    }
+</style>
+{% endblock%}
+{% block results_display %}
+<div align="center">
+    {% if prompt %}
+    <div class="prompt alert alert-danger" role="alert"  align="center">
+      <strong>出错啦!</strong>{{ prompt }}
+    </div>
+    {% endif %}
+    <div class="help alert alert-success" role="alert">
+        <ul>
+    {% for line in results %}
+        <li>{{ line }}</li>
+    {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+</div>

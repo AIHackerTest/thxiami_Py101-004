@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="天气查询">
+    <meta name="author" content="thxiami">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>问天内测版</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.bootcss.com/weather-icons/2.0.10/css/weather-icons-wind.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/weather-icons/2.0.10/css/weather-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weather-icons/2.0.10/font/weathericons-regular-webfont.svg">
+    <style media="screen">
+        .top {
+            margin-bottom: 10px;
+        }
+
+        .prompt {
+            width:60%;
+            margin-top: 15px;
+        }
+        .btn-primary {
+            background-color: #38f;
+            border-color:#38f;
+        }
+        .form-margin {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+    {% block top %}
+    {% endblock %}
+    <div class="top">
+        <p class="lead text-center">欢迎使用问天查询天气</p>
+        <form align="center" class="form-inline form-margin" action="{{ url_for('search') }}" method="GET">
+            <input type="text" class="form-control" name="user_input" placeholder="请输入城市名(中文或拼音)">
+            <button type="submit" class="btn btn-primary">查询天气</button>
+        </form>
+
+        <form align="center" action="{{ url_for('command_response') }}" method="GET">
+            <button type="submit" class="btn btn-primary" name="button" value="history">历史记录</button>
+            <button type="submit" class="btn btn-primary" name="button" value="help">帮助</button>
+        </form>
+    </div>
+    {% block  results_display %}
+    {% endblock %}
+
+</body>
+</html>

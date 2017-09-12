@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="天气查询">
+    <meta name="author" content="thxiami">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>问天内测版</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style media="screen">
+        .prompt {
+            width:60%;
+            margin-top: 20px;
+            margin:0 auto;
+        }
+    </style>
+
+</head>
+<body>
+    {% block top %}
+    {% endblock %}
+    <script src="{{ url_for('static', filename='echarts-all.js') }}"></script>
+    <script src="{{ url_for('static', filename='options.js') }}?v=0908"></script>
+    <script>
+        // var divPrompt = document.getElementById('prompt');
+        // var divMychart = document.getElementById('mychart');
+
+        function creatEcharts (add_option) {
+            //
+            var divPrompt = document.getElementById('prompt');
+            var divMychart = document.getElementById('mychart');
+            divPrompt.style = "display:none;"
+            divMychart.style = "height:400px;"
+            var myChart = echarts.init(document.getElementById("mychart"));
+            myChart.setOption(default_option);
+            myChart.setOption(add_option);
+        };
+
+        function creatPrompt(prompt) {
+            var divPrompt = document.getElementById('prompt');
+            var divMychart = document.getElementById('mychart');
+            divMychart.style = "display:none;"
+            divPrompt.innerHTML = prompt
+            divPrompt.style = "color:red;"
+        };
+
+        function request () {
+            // 获取用户输入
+            var city = document.getElementById('input').value
+            // ajax
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                // code for modern browsers
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {
+                // code for old IE browsers
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            // 定义 XMLHttpRequest 状态发生变化时调用的函数
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // var data = this.responseText;
+                    var data = JSON.parse(this.responseText);
+                    console.log('后端传来的:', data)
+                    console.log('json解析结果:', JSON.parse(this.responseText));
+                    if (data.type == 'option') {
+                        creatEcharts(data.value);
+                    }
+                    else {
+                        creatPrompt(data.value);
+                    }
+                }
+            }
+            xmlhttp.open('POST', "{{ url_for('search_ajax') }}", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("user_input=" + city);
+        }
+    </script>
+
+    <p align="center">欢迎使用问天查询天气</p>
+    <form align="center">
+        <span>请输入:</span>
+        <input type="text" id="input" placeholder="城市名（中文或拼音）">
+        <button type="button" onclick="request()">查询天气</button>
+    </form>
+
+    <form align="center" action="{{ url_for('command_response') }}" method="GET">
+        <button type="submit" name="button" value="history">历史记录</button>
+        <button type="submit" name="button" value="help">帮助</button>
+    </form>
+    <div id="prompt" style="color:red;display:none"></div>
+    <div id="mychart" style="height:400px;display:none"></div>
+    {% block  results_display %}
+    {% endblock %}
+
+</body>
+</html>

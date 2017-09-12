@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block results_display %}
+<div align="center">
+    {% if prompt %}
+    <div class="prompt alert alert-danger" role="alert">
+      <strong>出错啦!</strong>{{ prompt }}
+    </div>
+    {% endif %}
+    {% for line in results %}
+        <p>{{ line }}</p>
+    {% endfor %}
+{% endblock %}
+</div>

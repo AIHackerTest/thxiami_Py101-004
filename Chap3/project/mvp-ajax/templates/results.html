@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block results_display %}
+<div name="weather" align="center">
+    {% if prompt %}
+        <p>{{ prompt }}</p>
+    {% endif %}
+    <div name="now_weather">
+        <h3>{{ now_weather_info.city }}的实时天气：</h3>
+        <p>{{ now_weather_info.text }}</p>
+        <p>{{ now_weather_info.temperature }}℃</p>
+    </div>
+    <div name="future_weather">
+        <h3>未来5天的天气：</h3>
+        {% for day_detail in future_weather_info.days_weather_details %}
+            <p>{{ day_detail.date }}</p>
+            <p>白天: {{ day_detail.text_day }}</p>
+            <p>晚上: {{ day_detail.text_night }}</p>
+            <p>{{ day_detail.tep_low }}~{{ day_detail.tep_high }}℃</p>
+        {% endfor %}
+    </div>
+    <p>以上天气信息更新时间:{{ now_weather_info.updated_time }}</p>
+</div>
+{% endblock %}

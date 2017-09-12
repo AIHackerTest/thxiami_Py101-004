@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+      document.getElementById("text").innerHTML =
+      this.responseText;
+    }
+    else if (this.readyState == 1) {
+        document.getElementById("text").innerHTML =
+        "建立连接";
+    }
+  };
+  xhttp.open("GET", "/ajax", true);
+  xhttp.send();
+}
+function showHit(str) {
+    console.log("str:", str);
+    document.getElementById("txtInput").innerHTML =
+    str
+}
+</script>
+
+<div id="demo">
+<h1 id="text">The XMLHttpRequest Object</h1>
+<button type="button" onclick="loadDoc()">Change Content</button>
+</div>
+
+<p>请输入</p>
+<input type="text" onkeyup="showHit(this.value)">
+<p>您输入了:<span id="txtInput"></span></p>
+</body>
+</html>

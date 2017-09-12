@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Echarts</title>
+</head>
+
+<body>
+    <script>
+        function loadOption () {
+            console.log('点击了按钮');
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                // code for modern browsers
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {
+                // code for old IE browsers
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            // ajax
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var option = JSON.parse(this.responseText);
+                    myCharts.setOption(default_option);
+                    myCharts.setOption(option);
+                }
+                // else if (this.readyState == 1) {
+                //     // 为 echarts 对象加载数据
+                //     myCharts.setOption(default_option);
+                // }
+            };
+            xmlhttp.open('GET', '/ajax_load', true);
+            xmlhttp.send();
+            // xmlhttp.open('POST', '/ajax_recv', true);
+            // xmlhttp.setRequestHeader('Content-Type', 'application/json');
+            // var data = JSON.stringify(default_option);
+            // xmlhttp.send(data);
+        };
+    </script>
+    <h1 id="text">The XMLHttpRequest Object</h1>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px"></div>
+    <button type="button" id="load" onclick="loadOption()">加载数据</button>
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+    <script type="text/javascript">
+        // 基于准备好的dom, 初始化 Echarts 图表
+        var myCharts = echarts.init(document.getElementById("main"));
+
+        var default_option = {
+    title : {
+        text: '未来5日气温变化',
+        x: 'center',
+        textStyle:{
+            fontSize: 18,
+            fontWeight: 'bolder',
+            color: '#27b5e0'
+        }
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['最高气温','最低气温'],
+        x: 'right'
+    },
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : ['周一', '周二', '周三']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            boundaryGap : [0, 0.2],
+            axisLabel : {
+                formatter: '{value} °C'
+            }
+        }
+    ],
+    series : [
+        {
+            name:'最高气温',
+            type:'line',
+            data:[15, 10, 13],
+            markPoint :
+            {
+                data :
+                [
+                    {name: '周一', value: 15, xAxis: 0, yAxis: 15},
+                    {name: '周二', value: 10, xAxis: 1, yAxis: 10},
+                ],
+                symbolSize: 18,
+                itemStyle:
+                {
+                      normal: {label:{formatter: '{c} °C'}}
+                 }
+            }
+        },
+        {
+            name:'最低气温',
+            type:'line',
+            data:[0, 3, 8],
+            markPoint : {
+                data : [],
+              symbolSize: 18,
+              itemStyle: {
+                    normal: {label:{formatter: '{c} °C'}}
+               }
+            }
+
+        }
+    ]
+};
+
+    </script>
+</body>
+</html>

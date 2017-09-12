@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block css %}
+<style media="screen">
+    .top {
+        margin-bottom: 10px;
+    }
+    .table {
+        width: 50%;
+    }
+    th {
+        text-align: center !important;
+        font-size: 15px;
+    }
+    .table tbody tr td {
+        vertical-align: middle;
+        text-align: center;
+    }
+    img {
+        width:40px;
+    }
+</style>
+{% endblock%}
+
+{% block results_display %}
+<div align="center">
+    {% if prompt %}
+        <div class="prompt alert alert-danger" role="alert">
+          <strong>出错啦!</strong>{{ prompt }}
+        </div>
+    {% endif %}
+    {% if history %}
+    <div class="history" align="center">
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>城市</th>
+              <th>更新时间</th>
+              <th>天气</th>
+              <th>气温</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for his in history %}
+                <tr>
+                  <td>{{ his.city }}</td>
+                  <td>{{ his.updated_time}}</td>
+                  <td><img src="https://s1.sencdn.com/web/icons/3d_50/{{ his.code }}.png" alt="weather code"/></td>
+                  <td>{{ his.temperature }}℃</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif%}
+</div>
+{% endblock %}
